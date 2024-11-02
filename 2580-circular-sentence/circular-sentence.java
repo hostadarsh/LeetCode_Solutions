@@ -10,13 +10,11 @@ class Solution {
             return true;
         }
         
-        for(int i = 1; i < sentence.length()-1; i++){
-            if(sentence.charAt(i) == ' '){
-                if(sentence.charAt(i-1) != sentence.charAt(i+1)){
-                    return false;
-                }
-                
+        while(k != -1){
+            if(sentence.charAt(k-1) != sentence.charAt(k+1)){
+                return false;
             }
+             k = sentence.indexOf(" " , k+1);
         }
         return true;
         
