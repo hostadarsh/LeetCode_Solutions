@@ -1,8 +1,10 @@
 class Solution {
     public boolean rotateString(String s, String goal) {
-        if (s.length() != goal.length()) {
-            return false;
+        int a = s.length(),c = goal.length();
+        String b = s.concat(s);
+        if(b.indexOf(goal)!=-1 && a<=c){
+            return true;
         }
-        return (s + s).contains(goal);
+        return false;
     }
 }
