@@ -15,8 +15,7 @@ class Solution {
             end = k;
         }
         else{
-            //(k < 0){
-            start = n - Math.abs(k);
+            start = n - (-k);
             end = n - 1;
         }
 
