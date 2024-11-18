@@ -15,7 +15,7 @@ class Solution {
             end = k;
         }
         else{
-            start = n - (-k);
+            start = n - Math.abs(k);     // instead we ca directly use (-k)
             end = n - 1;
         }
 
@@ -29,6 +29,7 @@ class Solution {
 
             sum = sum - code[(start)%n];
             sum = sum + code[(end+1)%n];
+        
             start++;
             end++;
             
