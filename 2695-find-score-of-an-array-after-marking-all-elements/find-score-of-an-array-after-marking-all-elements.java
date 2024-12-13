@@ -35,40 +35,57 @@
 // }
 // Brute Force
 
-import java.util.*;
+// import java.util.*;
+
+// class Solution {
+//     public long findScore(int[] nums) {
+//         int n = nums.length;
+        
+//         // Create a list of pairs (value, index)
+//         List<int[]> sortedNums = new ArrayList<>();
+//         for (int i = 0; i < n; i++) {
+//             sortedNums.add(new int[] {nums[i], i});
+//         }
+
+//         // Sort the list based on the value in each pair
+//         Collections.sort(sortedNums, (a, b) -> Integer.compare(a[0], b[0]));
+        
+//         long score = 0;  // Use long to avoid overflow
+        
+//         // Iterate through the sorted array
+//         for (int i = 0; i < n; i++) {
+//             int num = sortedNums.get(i)[0];
+//             int idx = sortedNums.get(i)[1];
+            
+//             if (nums[idx] != -1) {  // Process only if not already marked
+//                 score += num;  // Add the value to the score
+//                 nums[idx] = -1;  // Mark the current index as processed
+//                 if (idx > 0) {
+//                     nums[idx - 1] = -1;  // Mark the left neighbor as processed
+//                 }
+//                 if (idx < n - 1) {
+//                     nums[idx + 1] = -1;  // Mark the right neighbor as processed
+//                 }
+//             }
+//         }
+        
+//         return score;
+//     }
+// }
 
 class Solution {
     public long findScore(int[] nums) {
-        int n = nums.length;
-        
-        // Create a list of pairs (value, index)
-        List<int[]> sortedNums = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            sortedNums.add(new int[] {nums[i], i});
-        }
-
-        // Sort the list based on the value in each pair
-        Collections.sort(sortedNums, (a, b) -> Integer.compare(a[0], b[0]));
-        
-        long score = 0;  // Use long to avoid overflow
-        
-        // Iterate through the sorted array
-        for (int i = 0; i < n; i++) {
-            int num = sortedNums.get(i)[0];
-            int idx = sortedNums.get(i)[1];
-            
-            if (nums[idx] != -1) {  // Process only if not already marked
-                score += num;  // Add the value to the score
-                nums[idx] = -1;  // Mark the current index as processed
-                if (idx > 0) {
-                    nums[idx - 1] = -1;  // Mark the left neighbor as processed
-                }
-                if (idx < n - 1) {
-                    nums[idx + 1] = -1;  // Mark the right neighbor as processed
-                }
+        long res = 0;
+        for (int i = 0; i < nums.length; i += 2) {
+            int start = i;
+            while (i + 1 < nums.length && nums[i + 1] < nums[i]) {
+                i++;
+            }
+            for (int j = i; j >= start; j -= 2) {
+                res += nums[j];
             }
         }
-        
-        return score;
+        return res;
     }
 }
+
