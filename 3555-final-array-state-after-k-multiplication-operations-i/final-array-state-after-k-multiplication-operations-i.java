@@ -25,7 +25,6 @@
  class Solution {
      public int[] getFinalState(int[] arr, int k, int multiplier) {
 
-        int[] ans = new int[arr.length];
 
         while(k > 0){
             int x = 0;
