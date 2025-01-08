@@ -3,9 +3,7 @@ class Solution {
         int count = 0;
         for(int i = 0; i < words.length; i++){
             for(int j = i+1; j < words.length; j++){
-                if(j == i){
-                    continue;
-                }
+               
                 if(isPrefixAndSuffix(words[i], words[j])){
                     count++;
                 }
