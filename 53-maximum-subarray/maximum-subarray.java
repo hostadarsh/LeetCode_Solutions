@@ -47,15 +47,12 @@
 
 class Solution {
     public int maxSubArray(int[] nums) {
-        int ms = nums[0], s = 0;
-
-        for(int i = 0; i< nums.length;i++){
-            s += nums[i];
-            ms = s > ms ? s : ms;
- 
-            if(s<0) s = 0;
+        int s = 0, ms = nums[0];
+        for (int num : nums) {
+            s += num;
+            ms = s >ms ? s : ms;
+            if (s < 0) s = 0;
         }
         return ms;
-         
     }
 }
