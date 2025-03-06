@@ -11,12 +11,8 @@ class Solution {
         }
 
     for(int i = 0; i< arr.length; i++){
-        int diff = res[i] - arr[i];
-        if(diff > maxd){
-            maxd = diff;
-        }
+        maxd = Math.max(maxd,res[i] - arr[i]);
     }
     return maxd;
-        
     }
 }
