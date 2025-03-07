@@ -8,8 +8,7 @@ class Solution {
          for(int i = 0; i < 3; i++){
             for(int j = 0; j < nums.length; j++ ){
                 if(res[j] == i){
-                    nums[idx] = i;
-                    idx++;
+                    nums[idx++] = i;
                 }
             }
         }
