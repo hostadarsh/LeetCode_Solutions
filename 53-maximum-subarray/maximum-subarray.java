@@ -70,9 +70,7 @@ class Solution {
            
             ms = Math.max(ms,s);
 
-             if(s<0){
-                s=0;
-            }
+            s= s<0?0:s;
         }
         return ms;
 
