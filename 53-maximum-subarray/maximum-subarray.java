@@ -45,14 +45,36 @@
 //     }
 // }
 
+// class Solution {
+//     public int maxSubArray(int[] nums) {
+//         int s = 0, ms = nums[0];
+//         for (int num : nums) {
+//             s += num;
+//             ms = s >ms ? s : ms;
+//             if (s < 0) s = 0;
+//         }
+//         return ms;
+//     }
+// }
+
+
+
+
 class Solution {
     public int maxSubArray(int[] nums) {
-        int s = 0, ms = nums[0];
-        for (int num : nums) {
-            s += num;
-            ms = s >ms ? s : ms;
-            if (s < 0) s = 0;
+     
+        int ms= nums[0], s = 0;
+
+        for(int n : nums){
+            s = s + n;
+           
+            ms = Math.max(ms,s);
+
+             if(s<0){
+                s=0;
+            }
         }
         return ms;
+
     }
 }
