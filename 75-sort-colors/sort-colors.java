@@ -11,8 +11,6 @@ class Solution {
                     nums[idx++] = i;
                 }
             }
-        }
-        
-        
+        }  
     }
 }
