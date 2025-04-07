@@ -1,17 +1,55 @@
+// class Solution {
+//     public boolean canPartition(int[] nums) {
+//         int totalSum = 0;
+//         for (int num : nums) totalSum += num;
+//         if (totalSum % 2 != 0) return false;
+//         int targetSum = totalSum / 2;
+//         boolean[] dp = new boolean[targetSum + 1];
+//         dp[0] = true;
+//         for (int num : nums) {
+//             for (int currSum = targetSum; currSum >= num; currSum--) {
+//                 dp[currSum] = dp[currSum] || dp[currSum - num];
+//                 if (dp[targetSum]) return true;
+//             }
+//         }
+//         return dp[targetSum];
+//     }
+// }
+
 class Solution {
+    Boolean canPartition(Boolean[] memo, int s, int index, int[] nums) {
+        if (s == 0)
+            return true;
+
+        if (s < 0)
+            return false;
+       
+        if (index == 0)
+            return s == nums[0];
+       
+        if (memo[s] != null)
+            return memo[s];
+       
+        return memo[s] = canPartition(memo, s - nums[index], index - 1, nums) || canPartition(memo, s, index - 1, nums);
+    }
+
     public boolean canPartition(int[] nums) {
-        int totalSum = 0;
-        for (int num : nums) totalSum += num;
-        if (totalSum % 2 != 0) return false;
-        int targetSum = totalSum / 2;
-        boolean[] dp = new boolean[targetSum + 1];
-        dp[0] = true;
-        for (int num : nums) {
-            for (int currSum = targetSum; currSum >= num; currSum--) {
-                dp[currSum] = dp[currSum] || dp[currSum - num];
-                if (dp[targetSum]) return true;
-            }
-        }
-        return dp[targetSum];
+
+        int s = 0;
+
+        for (int i = 0; i < nums.length; i++)
+            s += nums[i];
+
+        if (s % 2 != 0)
+            return false;
+
+        int n = nums.length;
+
+        s /= 2;
+
+        Boolean[] memo = new Boolean[s + 1];
+
+        return canPartition(memo, s, n - 1, nums);
+
     }
 }
