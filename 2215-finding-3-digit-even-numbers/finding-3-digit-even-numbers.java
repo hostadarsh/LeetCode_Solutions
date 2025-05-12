@@ -47,9 +47,8 @@
 // }
 
 class Solution {
-     int ans[] = new int[451];
-
     public int[] findEvenNumbers(int[] digits) {
+         int ans[] = new int[451];
         int count[] = new int[10];
         int size = 0;
         for (int d : digits)
