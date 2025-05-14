@@ -87,8 +87,8 @@ class Solution {
         int n = heights.length;
         int maxA = 0;
 
-        for(int i = 0; i < n; i++){
-            while(!st.isEmpty() && heights[i] <= heights[st.peek()]){
+        for(int i = 0; i <= n; i++){
+            while(!st.isEmpty() && (i==n || heights[i] <= heights[st.peek()])){
                 int height = heights[st.peek()];
                 st.pop();
                 int width;
@@ -102,11 +102,7 @@ class Solution {
             }
             st.push(i);
         }
-         while(!st.isEmpty()){
-            int height = heights[st.pop()];
-            int width = st.isEmpty() ? n : n - st.peek() - 1;
-            maxA = Math.max(maxA, height * width);
-        }
+     
         return maxA;
     }
 }
