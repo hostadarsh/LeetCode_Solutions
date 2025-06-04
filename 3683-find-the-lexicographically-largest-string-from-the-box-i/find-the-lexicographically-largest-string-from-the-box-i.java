@@ -17,7 +17,7 @@ class Solution {
                 temp = word.substring(i);
             }
 
-            if(temp.compareTo(ans) > 0){
+            if(ans.compareTo(temp) < 0){
                 ans = temp;
             }
         }
