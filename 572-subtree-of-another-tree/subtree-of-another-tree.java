@@ -13,21 +13,42 @@
  *     }
  * }
  */
+// class Solution {
+
+//     public boolean isIdentical(TreeNode root, TreeNode subRoot){
+//         if(root == null && subRoot == null){
+//             return true;
+//         }
+//         if(root == null || subRoot == null){
+//             return false;
+//         }
+//         if(root.val == subRoot.val){
+//         return isIdentical(root.left, subRoot.left) && isIdentical(root.right, subRoot.right);
+//         }
+//         return false;
+//     }
+
+//     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        
+//         if(subRoot == null){
+//             return true;
+//         }
+
+//         if(root == null){
+//             return false;
+//         }
+
+//         if(root.val == subRoot.val){
+//             if(isIdentical(root, subRoot)){
+//                 return true;
+//             }
+//         }
+//         return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+//     }
+// }
+
+
 class Solution {
-
-    public boolean isIdentical(TreeNode root, TreeNode subRoot){
-        if(root == null && subRoot == null){
-            return true;
-        }
-        if(root == null || subRoot == null){
-            return false;
-        }
-        if(root.val == subRoot.val){
-        return isIdentical(root.left, subRoot.left) && isIdentical(root.right, subRoot.right);
-        }
-        return false;
-    }
-
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         
         if(subRoot == null){
@@ -39,10 +60,28 @@ class Solution {
         }
 
         if(root.val == subRoot.val){
-            if(isIdentical(root, subRoot)){
+            if(isIdentical(root,subRoot)){
                 return true;
             }
         }
-        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+
+        return isSubtree(root.right, subRoot) || isSubtree(root.left, subRoot);
+
+    }
+
+    public boolean isIdentical(TreeNode root, TreeNode subRoot){
+        if(root == null && subRoot == null){
+            return true;
+        }
+
+        if(root == null || subRoot == null){
+            return false;
+        }
+
+        if(root.val == subRoot.val){
+            return isIdentical(root.right, subRoot.right) && isIdentical(root.left, subRoot.left);
+        }
+
+        return false;
     }
 }
