@@ -15,6 +15,8 @@
  */
 class Solution {
     public long kthLargestLevelSum(TreeNode root, int k) {
+
+        if(root==null)return -1;
         List<Long> result = new ArrayList<>();
 
         Queue<TreeNode> q = new LinkedList<>();
