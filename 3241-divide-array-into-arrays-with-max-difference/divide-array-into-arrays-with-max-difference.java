@@ -14,29 +14,29 @@
 //     }
 // }
 
-class Solution {
-    public int[][] divideArray(int[] nums, int k) {
-        Arrays.sort(nums);
-        List<List<Integer>> temp = new ArrayList<>();
+// class Solution {
+//     public int[][] divideArray(int[] nums, int k) {
+//         Arrays.sort(nums);
+//         List<List<Integer>> temp = new ArrayList<>();
 
-        for (int i = 0; i < nums.length; i += 3) {
-            if (nums[i + 2] - nums[i] > k) {
-                return new int[0][];
-            }
-            temp.add(Arrays.asList(nums[i], nums[i + 1], nums[i + 2]));
-        }
+//         for (int i = 0; i < nums.length; i += 3) {
+//             if (nums[i + 2] - nums[i] > k) {
+//                 return new int[0][];
+//             }
+//             temp.add(Arrays.asList(nums[i], nums[i + 1], nums[i + 2]));
+//         }
 
-        // Convert List<List<Integer>> to int[][]
-        int[][] result = new int[temp.size()][3];
-        for (int i = 0; i < temp.size(); i++) {
-            for (int j = 0; j < 3; j++) {
-                result[i][j] = temp.get(i).get(j);
-            }
-        }
+//         // Convert List<List<Integer>> to int[][]
+//         int[][] result = new int[temp.size()][3];
+//         for (int i = 0; i < temp.size(); i++) {
+//             for (int j = 0; j < 3; j++) {
+//                 result[i][j] = temp.get(i).get(j);
+//             }
+//         }
 
-        return result;
-    }
-}
+//         return result;
+//     }
+// }
 
 
 // class Solution {
@@ -64,3 +64,17 @@ class Solution {
 //     }
 // }
 
+class Solution {
+    public int[][] divideArray(int[] nums, int k) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int[][] ans = new int[n/3][3];
+        for(int i = 0; i < n; i += 3) {
+            int[] arr = new int[3];
+            for(int j = i; j < i + 3; ++j) arr[j-i] = nums[j];
+            if(arr[2]-arr[0] > k) return new int[0][0];
+            ans[i/3] = arr;
+        }
+        return ans;
+    }
+}
