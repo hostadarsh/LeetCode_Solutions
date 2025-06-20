@@ -37,33 +37,66 @@
 //     }
 // }
 
+// class Solution {
+//     public int maxDistance(String st, int k) {
+//         int n = 0;
+//         int s = 0;
+//         int e = 0;
+//         int w = 0;
+
+//         int result = 0;
+//         char[] chars = st.toCharArray();
+
+//         for (int i = 0; i < chars.length; i++) {
+//             char c = chars[i];
+//             if (c == 'N') {
+//                 n++;
+//             } else if (c == 'S') {
+//                 s++;
+//             } else if (c == 'E') {
+//                 e++;
+//             } else {
+//                 w++;
+//             }
+
+//             int current = Math.abs(n-s) + Math.abs(e-w);
+//             int distance = current + Math.min(2*k,i+1-current);
+//             result = Math.max(result, distance);
+//         }
+
+//         return result;
+//     }
+// }
+
 class Solution {
     public int maxDistance(String st, int k) {
-        int n = 0;
-        int s = 0;
-        int e = 0;
-        int w = 0;
-
+        int north = 0, south = 0, east = 0, west = 0;
         int result = 0;
         char[] chars = st.toCharArray();
 
         for (int i = 0; i < chars.length; i++) {
             char c = chars[i];
             if (c == 'N') {
-                n++;
+                north++;
             } else if (c == 'S') {
-                s++;
+                south++;
             } else if (c == 'E') {
-                e++;
+                east++;
             } else {
-                w++;
+                west++;
             }
 
-            int current = Math.abs(n-s) + Math.abs(e-w);
-            int distance = current + Math.min(2*k,i+1-current);
-            result = Math.max(result, distance);
+            int currentDistance = Math.abs(north - south) + Math.abs(east - west);
+            int stepsUsed = i + 1;
+
+            // Max we can boost the distance by changing up to k steps (each gives +2)
+            int maxBoost = Math.min(2 * k, stepsUsed - currentDistance);
+            int possibleDistance = currentDistance + maxBoost;
+
+            result = Math.max(result, possibleDistance);
         }
 
         return result;
     }
 }
+
