@@ -7,10 +7,11 @@ class Solution {
         }
 
         for(int i = 500; i > 0 ; i--){
-            int match = freq[i] == i ? freq[i] : -1;
-            max = Math.max(max,match); 
+            if( freq[i] == i){
+                return i;
+          }
         }
 
-        return max;
+        return -1;
     }
 }
