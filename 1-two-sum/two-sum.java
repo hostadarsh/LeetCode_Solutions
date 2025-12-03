@@ -33,27 +33,74 @@
 // }
 
 
-import java.util.HashMap;
+// import java.util.HashMap;
+
+// class Solution {
+//     public int[] twoSum(int[] nums, int target) {
+
+//         int [] ans = new int[2];
+
+//         HashMap<Integer,Integer> mpp = new HashMap<>();
+        
+//         for(int i = 0; i< nums.length; i++){
+//             int num = nums[i];
+//             int moreNeeded = target-num;
+//             if(mpp.containsKey(moreNeeded)){
+//                 ans[0] = mpp.get(moreNeeded);
+//                 ans[1] = i;
+//                 return ans;
+//             }
+//             mpp.put(nums[i],i);
+//         }
+
+//         return ans;
+//     }
+// }
+
+// class Solution {
+//     public int[] twoSum(int[] nums, int target) {
+
+//         int[] arr = new int[2];
+
+//         HashMap<Integer,Integer> mpp = new HashMap<>();
+
+//         for(int i = 0; i < nums.length; i++){
+//             int num = nums[i];
+//             int moreNeeded = target - num;
+
+//             if(mpp.containsKey(moreNeeded)){
+//                 arr[0] = mpp.get(moreNeeded);
+//                 arr[1] = i;
+//                 return arr;
+//             }
+//             mpp.put(nums[i] , i);
+//         }
+
+//         return arr;   }
+// }
+
+
 
 class Solution {
     public int[] twoSum(int[] nums, int target) {
 
-        int [] ans = new int[2];
+        int[] arr = new int[2];
+        HashMap<Integer,Integer> store = new HashMap<>();
 
-        HashMap<Integer,Integer> mpp = new HashMap<>();
-        
-        for(int i = 0; i< nums.length; i++){
+        for(int i = 0; i < nums.length; i++){
             int num = nums[i];
-            int moreNeeded = target-num;
-            if(mpp.containsKey(moreNeeded)){
-                ans[0] = mpp.get(moreNeeded);
-                ans[1] = i;
-                return ans;
-            }
-            mpp.put(nums[i],i);
-        }
+            int diff = target - num;
 
-        return ans;
+            if(store.containsKey(diff)){
+                arr[0] = store.get(diff);
+                arr[1] = i;
+            }
+
+            store.put(nums[i], i);
+        }
+        return arr;
     }
 }
+
+
 
