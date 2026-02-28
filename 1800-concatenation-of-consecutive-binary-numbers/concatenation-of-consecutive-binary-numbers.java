@@ -16,7 +16,8 @@
 
 class Solution {
   public int concatenatedBinary(int n) {
-    long res=0, mod=1000000007;
+    long res=0;
+    long mod=1000000007;
         int bits=0;
         for(int i=1;i<=n;i++)
         {
