@@ -1,26 +1,62 @@
+// class Solution {
+//     public int numSpecial(int[][] mat) {
+//         int m = mat.length, n = mat[0].length;
+//         int[] row = new int[m];
+//         int[] col = new int[n];
+//         for (int i = 0; i < m; i++) {
+//             for (int j = 0; j < n; j++) {
+//                 if (mat[i][j] == 1) {
+//                     row[i]++;
+//                     col[j]++;
+//                 }
+//             }
+//         }
+
+//         int ans = 0;
+//         for (int i = 0; i < m; i++) {
+//             for (int j = 0; j < n; j++) {
+//                 if (mat[i][j] == 1 && row[i] == 1 && col[j] == 1) {
+//                     ans++;
+//                 }
+//             }
+//         }
+
+//         return ans;
+//     }
+// }
+
 class Solution {
     public int numSpecial(int[][] mat) {
-        int m = mat.length, n = mat[0].length;
-        int[] row = new int[m];
-        int[] col = new int[n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (mat[i][j] == 1) {
-                    row[i]++;
-                    col[j]++;
-                }
-            }
+
+        int specials = 0;
+
+        for (int i = 0; i < mat.length; i++) {
+            int index = checkRow(mat, i);
+            if (index >= 0 && checkColumn(mat, i, index))
+                specials++;
         }
 
-        int ans = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (mat[i][j] == 1 && row[i] == 1 && col[j] == 1) {
-                    ans++;
-                }
+        return specials;
+    }
+
+    private int checkRow(int[][] mat, int i) {
+        int index = -1;
+        for (int j = 0; j < mat[0].length; j++) {
+            if (mat[i][j] == 1) {
+                if (index >= 0)
+                    return -1;
+                else
+                    index = j;
             }
         }
+        return index;
+    }
 
-        return ans;
+    private boolean checkColumn(int[][] mat, int i, int index) {
+        for (int j = 0; j < mat.length; j++) {
+            if (mat[j][index] == 1 && j != i)
+                return false;
+        }
+        return true;
     }
 }
