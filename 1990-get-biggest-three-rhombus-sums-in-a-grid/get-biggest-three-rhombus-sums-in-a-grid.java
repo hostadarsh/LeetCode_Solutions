@@ -1,49 +1,124 @@
 class Solution {
+
     public int[] getBiggestThree(int[][] grid) {
-        int m=grid.length;
-        int n=grid[0].length;
-        TreeSet<Integer> ts=new TreeSet<>((a,b)->Integer.compare(b,a));
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                ts.add(grid[i][j]);
-                for(int size=1;size<=Math.min(m,n);size++){
-                    int sum=0;
-                    boolean valid=true;
-                    int x1=i,y1=j,x2=i,y2=j;
-                    int dir1=-1,dir2=1;
-                    int temp=0;
-                    while(temp<=2*size){
-                        if(Math.min(x1,x2)<0||Math.max(x1,x2)>=m||Math.min(y1,y2)<0||Math.max(y1,y2)>=n){
-                            valid=false;
-                            break;
-                        }
-                        if(x1==x2&&y1==y2){
-                            sum+=grid[x1][y1];
-                        }else{
-                            sum+=grid[x1][y1];
-                            sum+=grid[x2][y2];
-                        }
-                        if(temp==size){
-                            dir2=dir2*dir1;
-                            dir1=dir2*dir1;
-                        }
-                        x1--;
-                        x2--;
-                        y1=y1+dir1;
-                        y2=y2+dir2;
-                        temp++;
+        int m = grid.length;
+        int n = grid[0].length;
+
+        int first = Integer.MIN_VALUE; //firstLargest rhombus sum
+        int second = Integer.MIN_VALUE;
+        int third = Integer.MIN_VALUE;
+
+        //iterate through everything and treat each cell as center of rhombus
+        //center is (row, col)
+        for(int row = 0; row < m; row++){
+            for(int col = 0; col < n; col++){
+                //get max rhombus size from this center cell. A size is valid if the four corners are in the grid
+                int top = row + 1;
+                int bottom = m - row;
+                int left = col + 1;
+                int right = n - col;
+
+                int size = Math.min(Math.min(top, bottom), Math.min(left, right));
+
+                for(int layer = 0; layer < size; layer++){ //calculate sums for all possible rhombuses at this center
+                    //calculate curr rhombusSum
+                    int sum = calculateSum(layer, row, col, grid);
+
+                    //we want only distinct sums so ignore if sum is already recorded
+                    if (sum == first || sum == second || sum == third) {
+                        continue;
                     }
-                    if(valid){
-                        ts.add(sum);
+
+                    //store sum in the sorted
+                    if (sum > first) {
+                        // Shift everything down
+                        third = second;
+                        second = first;
+                        first = sum;
+                    } else if (sum > second) {
+                        third = second;
+                        second = sum;
+                    } else if (sum > third) {
+                        third = sum;
                     }
+
                 }
+
             }
         }
-        List<Integer> lst=new ArrayList<>();
-        while(!ts.isEmpty()&&lst.size()<3){
-            lst.add(ts.getFirst());
-            ts.removeFirst();
+
+        // Count how many valid top sums we actually have
+        int count = 0;
+        if (first != Integer.MIN_VALUE) count++;
+        if (second != Integer.MIN_VALUE) count++;
+        if (third != Integer.MIN_VALUE) count++;
+
+        // Create array of the correct size
+        int[] resultArray = new int[count];
+
+        // Fill it (in order: first, second, third)
+        int writeIndex = 0;
+
+        if (first != Integer.MIN_VALUE) {
+            resultArray[writeIndex] = first;
+            writeIndex++;
         }
-        return lst.stream().mapToInt(Integer::intValue).toArray();
+        if (second != Integer.MIN_VALUE) {
+            resultArray[writeIndex] = second;
+            writeIndex++;
+        }
+        if (third != Integer.MIN_VALUE) {
+            resultArray[writeIndex] = third;
+            writeIndex++;
+        }
+        return resultArray;
     }
+
+    public int calculateSum(int s, int r, int c, int[][] grid) {
+        //base case
+        if (s == 0) {
+            return grid[r][c];
+        }
+
+        int sum = 0;
+
+        /*
+         * Edge 1: TOP -> RIGHT (down-right diagonal)
+         * Start at (r - s, c)
+         * End just before (r, c + s)
+         */
+        for (int i = 0; i < s; i++) {
+            sum += grid[r - s + i][c + i];
+        }
+
+        /*
+         * Edge 2: RIGHT -> BOTTOM (down-left diagonal)
+         * Start at (r, c + s)
+         * End just before (r + s, c)
+         */
+        for (int i = 0; i < s; i++) {
+            sum += grid[r + i][c + s - i];
+        }
+
+        /*
+         * Edge 3: BOTTOM -> LEFT (up-left diagonal)
+         * Start at (r + s, c)
+         * End just before (r, c - s)
+         */
+        for (int i = 0; i < s; i++) {
+            sum += grid[r + s - i][c - i];
+        }
+
+        /*
+         * Edge 4: LEFT -> TOP (up-right diagonal)
+         * Start at (r, c - s)
+         * End just before (r - s, c)
+         */
+        for (int i = 0; i < s; i++) {
+            sum += grid[r - i][c - s + i];
+        }
+
+        return sum;
+    }
+
 }
