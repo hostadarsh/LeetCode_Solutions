@@ -17,7 +17,7 @@ class Solution {
             }
         }
 
-        int res = Lcount > Rcount ? Lcount - Rcount + count_ : (Rcount - Lcount + count_); 
+        int res = Lcount > Rcount ? Lcount - Rcount + count_ : Rcount - Lcount + count_; 
         
         return res;
     }
