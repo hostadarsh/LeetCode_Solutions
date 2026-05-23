@@ -1,42 +1,41 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-
-        int n = nums.length;
-
-        int idx = -1;
-
-        for(int i = n - 2; i >= 0; i--){
-            if(nums[i] < nums[i+1]){
-                idx = i;
-                break;
-            }
-        }
-
-        if(idx == -1){
-            for(int i = 0; i < (n/2); i++){
-                int temp = nums[i];
-                nums[i] = nums[n-i-1];
-                nums[n-i-1] = temp;
-            }
-           return;
-        }
         
-        for(int i = n - 1; i > idx; i-- ){
-            if(nums[i] > nums[idx]){
-                int temp = nums[i];
-                nums[i] = nums[idx];
-                nums[idx] = temp;
+        int index = -1;
+
+        for(int i = nums.length - 2; i >= 0; i--){
+            if(nums[i] < nums[i+1]){
+                index = i;
                 break;
             }
         }
-        while(idx+1 < n){
-            int temp = nums[idx+1];
-            nums[idx+1] = nums[n-1];
-            nums[n-1] = temp;
-            idx++;
-            n--;
-        }
-         return ;
 
+        if(index == -1){
+            reverse(nums,0, nums.length - 1);
+            return;
+        }
+
+        //just greatest
+        for(int i = nums.length - 1; i > 0; i-- ){
+            if(nums[index] < nums[i]){
+                int temp = nums[index];
+                nums[index] = nums[i];
+                nums[i] = temp;
+                break;
+            }
+        }
+
+        reverse(nums, index + 1, nums.length - 1);
+
+    }
+
+    public void reverse (int[] arr, int start, int end){
+        while(start < end){
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++;
+            end--;
+        }
     }
 }
