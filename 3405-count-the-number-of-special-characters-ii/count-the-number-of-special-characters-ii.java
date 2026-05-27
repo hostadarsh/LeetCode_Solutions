@@ -1,56 +1,97 @@
+// class Solution {
+//     public int numberOfSpecialChars(String word) {
+        
+//         int[] state = new int[26];
+
+//         /*
+//         0 -> not seen
+//         1 -> lowercase seen
+//         2 -> valid special
+//        -1 -> invalid
+//         */
+
+//         for(char ch : word.toCharArray()){
+
+//             // lowercase
+//             if(Character.isLowerCase(ch)){
+
+//                 int idx = ch - 'a';
+
+//                 // lowercase after uppercase
+//                 if(state[idx] == 2 || state[idx] == -1){
+//                     state[idx] = -1;
+//                 }
+//                 else if(state[idx] == 0){
+//                     state[idx] = 1;
+//                 }
+//             }
+
+//             // uppercase
+//             else{
+
+//                 int idx = ch - 'A';
+
+//                 // uppercase before lowercase
+//                 if(state[idx] == 0){
+//                     state[idx] = -1;
+//                 }
+
+//                 // proper lowercase before uppercase
+//                 else if(state[idx] == 1){
+//                     state[idx] = 2;
+//                 }
+//             }
+//         }
+
+//         int ans = 0;
+
+//         for(int val : state){
+//             if(val == 2){
+//                 ans++;
+//             }
+//         }
+
+//         return ans;
+//     }
+// }
+
+
+
+
 class Solution {
     public int numberOfSpecialChars(String word) {
+
+        int count = 0;
         
-        int[] state = new int[26];
+        int[] lower = new int[26];
+        int[] upper = new int[26];
 
-        /*
-        0 -> not seen
-        1 -> lowercase seen
-        2 -> valid special
-       -1 -> invalid
-        */
+        Arrays.fill(lower, -1);
+        Arrays.fill(upper, -1);
 
-        for(char ch : word.toCharArray()){
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
 
-            // lowercase
             if(Character.isLowerCase(ch)){
-
-                int idx = ch - 'a';
-
-                // lowercase after uppercase
-                if(state[idx] == 2 || state[idx] == -1){
-                    state[idx] = -1;
-                }
-                else if(state[idx] == 0){
-                    state[idx] = 1;
-                }
+                lower[ch - 'a'] = i;
             }
-
-            // uppercase
+            else if(Character.isUpperCase(ch) && upper[ch - 'A'] == -1){
+                upper[ch - 'A'] = i;
+            }
             else{
-
-                int idx = ch - 'A';
-
-                // uppercase before lowercase
-                if(state[idx] == 0){
-                    state[idx] = -1;
-                }
-
-                // proper lowercase before uppercase
-                else if(state[idx] == 1){
-                    state[idx] = 2;
-                }
+                continue;
             }
         }
 
-        int ans = 0;
-
-        for(int val : state){
-            if(val == 2){
-                ans++;
+        for(int i = 0; i < 26; i++){
+             if(lower[i] != -1 && upper[i] != -1){
+            if(lower[i] < upper[i]){
+                count++;
             }
+             }
         }
 
-        return ans;
+        return count;
+        
     }
 }
