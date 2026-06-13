@@ -11,14 +11,14 @@ class Solution {
                 count += weights[ch - 'a'];
             }
 
-            // if(count >= 26){
-            //     index = count % 26;
-            // }
-            // else{
-            //     index = count;
-            // }
+            if(count >= 26){
+                index = count % 26;
+            }
+            else{
+                index = count;
+            }
 
-            index = count % 26;
+            // index = count % 26;
 
             sb.append((char) ('z' - index));
         }
