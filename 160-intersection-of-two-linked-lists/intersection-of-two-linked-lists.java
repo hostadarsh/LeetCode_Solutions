@@ -9,43 +9,47 @@
  *     }
  * }
  */
-// public class Solution {
-//     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-
-//         while(headB != null){
-//             ListNode temp = headA;
-//             while(temp != null){
-//                 if(temp == headB){
-//                     return headB;
-//                 }
-//                 temp = temp.next;
-//             }
-//             headB = headB.next;
-//         }
-
-//         return null;
-        
-//     }
-// }
-
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        
+        ListNode dummyA = headA;
+        ListNode dummyB = headB;
+        
+        int sizeA = 0;
+        int sizeB = 0;
 
-        HashSet<ListNode> hs = new HashSet<>();
-
-        while(headA != null){
-            hs.add(headA);
-            headA = headA.next;
+        while(dummyA != null){
+            sizeA++;
+            dummyA = dummyA.next;
         }
 
-        while(headB != null){
-            if(hs.contains(headB)){
-                return headB;
+        while(dummyB != null){
+            sizeB++;
+            dummyB = dummyB.next;
+        }
+
+        int diff = Math.abs(sizeA-sizeB);
+
+        if(sizeA > sizeB){
+            for(int i = 0; i < diff; i++){
+                headA = headA.next;
             }
+        }
+        else{
+            for(int i = 0; i < diff; i++){
+                headB = headB.next;
+            }
+        }
+
+        while(headA != null && headB != null){
+            if(headA == headB){
+                return headA;
+            }
+
+            headA = headA.next;
             headB = headB.next;
         }
 
         return null;
-        
     }
 }
