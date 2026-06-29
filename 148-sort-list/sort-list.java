@@ -34,15 +34,90 @@
 // }
 
 
+// class Solution {
+
+//     public ListNode mergeTwoSortedLinkedList(ListNode List1, ListNode List2){
+//         ListNode dummy = new ListNode(-1, null);
+
+//         ListNode temp = dummy;
+
+//         while(List1 != null && List2 != null){
+//             if(List1.val <= List2.val){
+//                 temp.next = List1;
+//                 List1 = List1.next;
+//             }
+//             else{
+//                 temp.next = List2;
+//                 List2 = List2.next;
+//             }
+//             temp = temp.next;
+//         }
+
+            
+
+//             if(List1 != null){
+//                 temp.next = List1;
+//                 List1 = List1.next; 
+//             }
+//             else{
+//                 temp.next = List2;
+//                 List2 = List2.next;
+//             }
+        
+
+//         return dummy.next;
+//     }
+
+//     public ListNode findMiddle(ListNode head){
+//         if(head == null || head.next == null){
+//             return head;
+//         }
+
+//         ListNode slow = head;
+//         ListNode fast = head.next;
+
+//         while(fast != null && fast.next != null){
+//             slow = slow.next;
+//             fast = fast.next.next;
+//         }
+
+//         return slow;
+//     }
+
+
+//     public ListNode sortList(ListNode head) {
+
+//         if(head == null || head.next == null){              // edge case
+//             return head;
+//         }
+
+//         ListNode middle = findMiddle(head);
+
+//         // splitting the Nodes
+
+//         ListNode right = middle.next;
+//         middle.next = null;
+//         ListNode left = head;
+
+//         left = sortList(left);
+//         right = sortList(right);
+
+//         return mergeTwoSortedLinkedList(left,right);
+        
+//     }
+// }
+
+
 class Solution {
 
     public ListNode mergeTwoSortedLinkedList(ListNode List1, ListNode List2){
+        
         ListNode dummy = new ListNode(-1, null);
 
         ListNode temp = dummy;
 
-        while(List1 != null && List2 != null){
-            if(List1.val <= List2.val){
+        while(List1 != null && List2 != null ){
+            if(List1.val < List2.val){
                 temp.next = List1;
                 List1 = List1.next;
             }
@@ -53,47 +128,44 @@ class Solution {
             temp = temp.next;
         }
 
-            
-
-            if(List1 != null){
-                temp.next = List1;
-                List1 = List1.next; 
-            }
-            else{
-                temp.next = List2;
-                List2 = List2.next;
-            }
-        
+        if(List1 != null){
+            temp.next = List1;
+            List1 = List1.next;
+        }
+        else{
+            temp.next = List2;
+            List2 = List2.next;
+        }
 
         return dummy.next;
+
     }
+
 
     public ListNode findMiddle(ListNode head){
         if(head == null || head.next == null){
             return head;
         }
 
-        ListNode slow = head;
-        ListNode fast = head.next;
+        ListNode Fast = head.next;
+        ListNode Slow = head;
 
-        while(fast != null && fast.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
+        while(Fast != null && Fast.next != null){
+            Fast = Fast.next.next;
+            Slow = Slow.next;
         }
 
-        return slow;
+        return Slow;
     }
 
 
     public ListNode sortList(ListNode head) {
-
-        if(head == null || head.next == null){              // edge case
+        
+        if(head == null || head.next == null){
             return head;
         }
 
         ListNode middle = findMiddle(head);
-
-        // splitting the Nodes
 
         ListNode right = middle.next;
         middle.next = null;
@@ -103,6 +175,5 @@ class Solution {
         right = sortList(right);
 
         return mergeTwoSortedLinkedList(left,right);
-        
     }
 }
