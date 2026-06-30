@@ -8,6 +8,8 @@ class Solution {
         int n = nums2.length;
 
         int[] res = new int[n];
+
+        HashMap<Integer,Integer> map = new HashMap<>();
         
         for(int i = n - 1; i >= 0; i-- ){
             while(!st.isEmpty() && nums2[st.peek()] <= nums2[i]){
@@ -24,12 +26,12 @@ class Solution {
             st.push(i);
         }
 
+        for(int i = 0; i < nums2.length; i++){
+            map.put(nums2[i], res[i]);
+        }
+
         for(int i = 0; i < nums1.length; i++){
-            for(int j = 0; j < nums2.length; j++){
-                if(nums1[i] == nums2[j]){
-                    ans[i] = res[j];
-                }
-            }
+            ans[i] = map.get(nums1[i]);
         }
 
         return ans;
