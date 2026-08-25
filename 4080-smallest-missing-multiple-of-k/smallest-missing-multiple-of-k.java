@@ -19,23 +19,43 @@
 //     }
 // }
 
+// class Solution {
+//     public int missingMultiple(int[] nums, int k) {
+
+//         Set<Integer> hash = new HashSet<>();
+
+//         for(int num : nums) {
+//             hash.add(num);
+//         }
+
+//         int multiple = k;
+
+//         while(hash.contains(multiple)) {
+
+//             multiple = multiple + k;
+
+//         }
+
+//         return multiple;
+//     }
+// }
+
 class Solution {
     public int missingMultiple(int[] nums, int k) {
 
-        Set<Integer> hash = new HashSet<>();
-
-        for(int num : nums) {
-            hash.add(num);
+        for(int multiple=k;;multiple+=k){
+            boolean found=false;
+            
+            for(int i=0;i<nums.length;i++){
+                if(nums[i]==multiple){
+                    found=true;
+                    break;
+                }
+            }
+            if(!found){
+            return multiple;
+            }
         }
-
-        int multiple = k;
-
-        while(hash.contains(multiple)) {
-
-            multiple = multiple + k;
-
-        }
-
-        return multiple;
+        
     }
 }
