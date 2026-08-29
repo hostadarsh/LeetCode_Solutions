@@ -1,39 +1,37 @@
-import java.util.*;
-
 class Solution {
     public int[] lexicographicallySmallestArray(int[] nums, int limit) {
         int n = nums.length;
-        if (n == 0) return new int[0];
-        
-        // Step 1: Pair each number with its index
-        int[][] sortedPairs = new int[n][2];
-        for (int i = 0; i < n; i++) {
-            sortedPairs[i][0] = nums[i];
-            sortedPairs[i][1] = i;
-        }
-        
-        // Step 2: Sort by number value
-        Arrays.sort(sortedPairs, (a, b) -> Integer.compare(a[0], b[0]));
-        
-        int[] result = new int[n];
-        int groupStart = 0;
-        
-        for (int i = 0; i < n; i++) {
-            // Step 3: Check if current group ends here
-            if (i == n - 1 || sortedPairs[i+1][0] - sortedPairs[i][0] > limit) {
-                // Step 4: Collect and sort original indices
-                List<Integer> indices = new ArrayList<>();
-                for (int j = groupStart; j <= i; j++) 
-                    indices.add(sortedPairs[j][1]);
-                Collections.sort(indices);
-                
-                // Step 5: Assign sorted values to sorted indices
-                for (int j = 0; j < indices.size(); j++) 
-                    result[indices.get(j)] = sortedPairs[groupStart + j][0];
-                
-                groupStart = i + 1; // Next group
+
+        int[] sorted = nums.clone();
+        Arrays.sort(sorted);
+
+        Map<Integer, List<Integer>> group = new HashMap<>();
+        Map<Integer, Integer> groupId = new HashMap<>();
+        Map<Integer, Integer> pos = new HashMap<>();
+
+        int id = 1;
+        group.computeIfAbsent(id, k -> new ArrayList<>()).add(sorted[0]);
+        groupId.put(sorted[0], id);
+
+        for(int i = 1; i < n; i++){
+            if(sorted[i] - sorted[i - 1] > limit){
+                id++;
             }
+
+            group.computeIfAbsent(id, k -> new ArrayList<>()).add(sorted[i]);
+            groupId.put(sorted[i], id);
         }
-        return result;
+
+        // Rebuild nums using the smallest
+        // available value from its group
+        for(int i = 0; i < n; i++){
+            int grp = groupId.get(nums[i]);
+            int p = pos.getOrDefault(grp, 0);
+
+            nums[i] = group.get(grp).get(p);
+            pos.put(grp, p + 1);
+        }
+
+        return nums;
     }
 }
