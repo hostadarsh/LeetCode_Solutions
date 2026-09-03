@@ -1,35 +1,44 @@
+// class Solution {
+//     public boolean uniformArray(int[] nums1) {
+
+//         Arrays.sort(nums1);
+
+//         if(nums1[0] % 2 != 0){
+//             return true;
+//         }
+//         else{
+
+//             for(int i = 1 ; i < nums1.length; i++){
+//                 if(nums1[i] % 2 != 0 ){
+//                     return false;
+//                 }
+//             }
+
+//         }
+
+//         return true;
+        
+//     }
+// }
+
+
 class Solution {
     public boolean uniformArray(int[] nums1) {
-        
-        // ArrayList<Integer> oddIndex = new ArrayList<>();
+        int min=Integer.MAX_VALUE;
+        for(int num:nums1){
+            min=Math.min(min,num);
+        }
 
-        // for(int i = 0; i < nums1.length; i++){
-        //     if(nums1[i] % 2 != 0){
-        //         oddIndex.add(nums1[i]);
-        //     }
-        // }
-
-        // if(oddIndex.size() == nums1.length || oddIndex.size() == 0){
-        //     return true;
-        // }
-
-        Arrays.sort(nums1);
-
-        if(nums1[0] % 2 != 0){
+        //minimum is odd -> always possible hoga
+        if(min%2==1){
             return true;
         }
-        else{
-
-            for(int i = 1 ; i < nums1.length; i++){
-                if(nums1[i] % 2 != 0 ){
-                    return false;
-                }
+        //minimum is even -> all elements must be even tabhi hoga
+        for(int num:nums1){
+            if(num%2==1){
+                return false;
             }
-
         }
-
         return true;
-        
-
     }
 }
