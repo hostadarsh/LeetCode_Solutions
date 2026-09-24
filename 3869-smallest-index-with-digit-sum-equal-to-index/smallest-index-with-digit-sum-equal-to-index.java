@@ -4,12 +4,12 @@ class Solution {
         int n = nums.length;
 
         for(int i = 0; i < n ; i++){
-            if(nums[i] < 10){
-                if(nums[i] == i ){
-                    return i ;
-                }
-            }
-            else{
+            // if(nums[i] < 10){
+            //     if(nums[i] == i ){
+            //         return i ;
+            //     }
+            // }
+            // else{
                 int sumOfDigit = 0;
                     while(nums[i] != 0){
                         sumOfDigit += nums[i]%10;
@@ -19,7 +19,7 @@ class Solution {
                     if(sumOfDigit == i){
                         return i;
                     }
-            }
+            //}
         }
         return -1;
         
