@@ -3,7 +3,6 @@ class Solution {
 
         int ans = 0;
         int count = 0;
-
         for(char ch : s.toCharArray()){
             if(ch =='('){
                 count++;
@@ -16,7 +15,6 @@ class Solution {
                 continue;
             }
         }
-
         return ans;
         
     }
