@@ -1,16 +1,40 @@
+// class Solution {
+//     public List<Integer> targetIndices(int[] nums, int target) {
+        
+//         Arrays.sort(nums);
+//         List<Integer> ans = new ArrayList<>();
+//         int a = 0;
+
+//         for(int i = 0; i < nums.length; i++){
+//             if(nums[i] == target){
+//                 ans.add(i);
+//             }
+//         }
+//         return ans;
+
+//     }
+// }
+
+
+
 class Solution {
     public List<Integer> targetIndices(int[] nums, int target) {
+        int count = 0;
+        int lessThan = 0;
         
-        Arrays.sort(nums);
-        List<Integer> ans = new ArrayList<>();
-        int a = 0;
-
-        for(int i = 0; i < nums.length; i++){
-            if(nums[i] == target){
-                ans.add(i);
+        for (int num : nums) {
+            if (num == target) {
+                count++;
+            } else if (num < target) {
+                lessThan++;
             }
         }
-        return ans;
-
+        
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            result.add(lessThan + i);
+        }
+        
+        return result;
     }
 }
