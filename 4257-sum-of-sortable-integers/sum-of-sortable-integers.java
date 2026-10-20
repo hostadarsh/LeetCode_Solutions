@@ -1,22 +1,44 @@
 class Solution {
+    public boolean check(int[] nums, int len) {
+        int n = nums.length;
+        int minn = 0;
+        
+        for (int i = 0; i < n; i += len) {
+            if (nums[i] < minn) return false;
+            
+            int maxx = nums[i];
+            boolean point = false;
+            
+            for (int j = i + 1; j < i + len; j++) {
+                if (nums[j] < minn) return false;
+                
+                if (nums[j - 1] > nums[j]) {
+                    if (point) return false;
+                    point = true;
+                }
+                
+                maxx = Math.max(maxx, nums[j]);
+            }
+            
+            if (point) {
+                if (nums[i] < nums[i + len - 1]) return false;
+            }
+            
+            minn = maxx;
+        }
+        
+        return true;
+    }
+    
     public int sortableIntegers(int[] nums) {
         int n = nums.length;
-
-        int[] desc = new int[n];  
-        for (int i = 1; i < n; i++) desc[i] = desc[i - 1] + (nums[i - 1] > nums[i] ? 1 : 0);
-        int[] premax = nums.clone(), sufmin = nums.clone();
-        Arrays.parallelPrefix(premax, Math::max);  
-        for (int i = n - 2; i >= 0; i--) sufmin[i] = Math.min(sufmin[i], sufmin[i + 1]);  
-        boolean[] cut = new boolean[n];  
-        cut[0] = true;
-        for (int m = 1; m < n; m++) cut[m] = premax[m - 1] <= sufmin[m];
-
-        BiPredicate<Integer, Integer> rotatable = (l, r) ->  
-            desc[r] - desc[l] + (nums[r] > nums[l] ? 1 : 0) <= 1;
-        IntPredicate sortable = k ->  
-            IntStream.iterate(0, l -> l < n, l -> l + k).allMatch(l -> cut[l] && rotatable.test(l, l + k - 1));
-
-        IntStream divisors = IntStream.rangeClosed(1, n).filter(k -> n % k == 0);
-        return divisors.filter(sortable).sum();
+        int ans = 0;
+        
+        for (int k = 1; k <= n; k++) {
+            if (n % k != 0) continue;
+            if (check(nums, k)) ans += k;
+        }
+        
+        return ans;
     }
 }
