@@ -1,34 +1,19 @@
 class ProductOfNumbers {
-    List<Integer> listProduct;
+    private final List<Integer> prefix = new ArrayList<>(List.of(1));  // prefix[i]: the product of the first i numbers after the last zero
 
-    public ProductOfNumbers() {
-        listProduct=new ArrayList();
-        listProduct.add(1);
-    }
-    
     public void add(int num) {
-        if(num==0){
-            listProduct=new ArrayList();
-            listProduct.add(1);
-        }else{
-            listProduct.add(listProduct.get(listProduct.size()-1)*num);    
-        }    
+        if (num == 0) {
+            prefix.clear();  // a window that reaches this zero is 0, so forget everything before it
+            prefix.add(1);
+        } else {
+            prefix.add(prefix.get(prefix.size() - 1) * num);
+        }
     }
-    
+
     public int getProduct(int k) {
-        if(k>listProduct.size()-1){
+        int n = prefix.size();
+        if (k >= n)  // the window reaches back to a zero
             return 0;
-        }
-        else{
-            return listProduct.get(listProduct.size()-1)/listProduct.get(listProduct.size()-1-k);
-        }
-        
+        return prefix.get(n - 1) / prefix.get(n - 1 - k);
     }
 }
-
-/**
- * Your ProductOfNumbers object will be instantiated and called as such:
- * ProductOfNumbers obj = new ProductOfNumbers();
- * obj.add(num);
- * int param_2 = obj.getProduct(k);
- */
